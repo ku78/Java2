@@ -3,18 +3,18 @@ package ru.geekbrains.java.leve1;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainCanvas extends JPanel {
+public class MainCanvas extends JPanel {//создаем класс MainCanvas и наследуем JPanel
 
     long lastFrameTime;
     private final MainCircles controller;
 
-    MainCanvas(MainCircles controller) {
-        lastFrameTime = System.nanoTime();
+    MainCanvas(MainCircles controller) {//создаем контрутор
+        lastFrameTime = System.nanoTime();// возвращает наносекунды
         this.controller = controller;
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {//создаем метод рисования на конве
         super.paintComponent(g);
 
         long currentTime = System.nanoTime();
@@ -29,7 +29,7 @@ public class MainCanvas extends JPanel {
         lastFrameTime = currentTime;
         repaint();
     }
-
+//создаем гетеры
     public int getLeft() { return 0; }
     public int getRight() { return getWidth() - 1; }
     public int getTop() { return 0; }

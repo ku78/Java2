@@ -18,7 +18,7 @@ public class Ball extends Sprite {
     }
 
     @Override
-    public void update(MainCanvas canvas, float deltaTime) {
+    public void update(MainCanvas canvas, float deltaTime) {//переопределяем метод обновления
         x += vX * deltaTime;
         y += vY * deltaTime;
         if (getLeft() < canvas.getLeft()) {
@@ -41,9 +41,9 @@ public class Ball extends Sprite {
     }
 
     @Override
-    public void render(MainCanvas canvas, Graphics g) {
+    public void render(MainCanvas canvas, Graphics g) {//переопределяем метод отрисовки
         g.setColor(color);
-        g.fillOval((int) getLeft(), (int) getTop(),
+        g.fillOval((int) getLeft(), (int) getTop(),//метод  fillOval рисует круг
                 (int) getWidth(), (int) getHeight());
     }
 }

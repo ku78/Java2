@@ -2,12 +2,12 @@ package ru.geekbrains.java.leve1;
 
 import java.awt.*;
 
-public abstract class Sprite {
+public abstract class Sprite {//создаем класс Sprite и меняем расположение центра объекта из угла фигуры в центр
     protected float x;
     protected float y;
     protected float halfWidth;
     protected float halfHeight;
-
+//создаем гетере и сетеры
     protected float getLeft() {
         return x - halfWidth;
     }
@@ -29,6 +29,7 @@ public abstract class Sprite {
     protected float getBottom() {
         return y + halfHeight;
     }
+
     protected void setBottom(float bottom) {
         y = bottom - halfHeight;
     }
