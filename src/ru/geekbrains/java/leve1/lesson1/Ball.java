@@ -1,4 +1,4 @@
-package ru.geekbrains.java.leve1;
+package ru.geekbrains.java.leve1.lesson1;
 
 
 import java.awt.*;
