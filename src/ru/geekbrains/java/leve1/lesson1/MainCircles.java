@@ -66,9 +66,9 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
 
     private void update(MainCanvas canvas, float deltaTime) {//создание метода обновления
         for (int i = 0; i < sprites.length; i++) {
-            sprites[i].update(canvas, deltaTime+1);
+            sprites[i].update(canvas, deltaTime);
         }
-        bc.update(canvas, deltaTime);
+        bc.update(canvas, deltaTime+1);
     }
 
     private void render(MainCanvas canvas, Graphics g) {//создаем метод отрисовки
@@ -83,11 +83,16 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
         return   new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton()==MouseEvent.BUTTON1)sprites[addRemove.priviousBall_id++]=new Ball(e.getX(),e.getY());
+                if (e.getButton()==MouseEvent.BUTTON1){
+                   // sprites[addRemove.priviousBall_id++]=new Ball(e.getX(),e.getY());}
+                    System.out.println("Button1");}
+
                 else if (e.getButton()==MouseEvent.BUTTON3){
-                    System.out.println(e.getX()+" "+e.getY());
-                    int idOfSprite=addRemove.findSpriteNumber(e.getX(),e.getY(),sprites);
-                    if (idOfSprite>=0)sprites[idOfSprite]=null;
+//                    System.out.println(e.getX()+" "+e.getY());
+//                    int idOfSprite=addRemove.findSpriteNumber(e.getX(),e.getY(),sprites);
+//                    if (idOfSprite>=0){
+//                        sprites[idOfSprite]=null;}
+                    System.out.println("Button2");
 
                 }
             }
