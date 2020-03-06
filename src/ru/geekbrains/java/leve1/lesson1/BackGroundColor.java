@@ -7,7 +7,7 @@ public class BackGroundColor extends Sprite {
     public Thread timerThread;
     private int  time;
    // private Sprite[] sprites = new Sprite[10];
-   static   float x=1,y=1,z=1;
+   static   float x=1.0f,y=1.0f,z=1.0f;
     private Color color;
 
 
@@ -22,13 +22,21 @@ public class BackGroundColor extends Sprite {
 
     @Override
     public void update(MainCanvas canvas, float deltaTime) {
-        x=colorChoice(deltaTime*x);
-         y=colorChoice(deltaTime*y);
-         z=colorChoice(deltaTime*z);
+        x=(float) (100+Math.random() * 105);
+              y=  (float) (Math.random());
+              z=  (float) (Math.random());
+        x=colorChoice(x);
+         y=colorChoice(y);
+         z=colorChoice(z);
          color= new Color(
                  (int) (x*255),
                  (int) (y * 255),
                  (int)  (z*255));
+        try {
+            Thread.sleep(120);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

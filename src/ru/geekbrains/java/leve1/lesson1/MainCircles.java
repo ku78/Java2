@@ -68,7 +68,7 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
         for (int i = 0; i < sprites.length; i++) {
             sprites[i].update(canvas, deltaTime);
         }
-        bc.update(canvas, deltaTime+1);
+        bc.update(canvas, deltaTime);
     }
 
     private void render(MainCanvas canvas, Graphics g) {//создаем метод отрисовки
