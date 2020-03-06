@@ -16,7 +16,8 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
     private static final int WINDOW_HEIGHT = 600;//высота
 
     Sprite bc = new BackGroundColor();
-    private Sprite[] sprites = new Sprite[10];//создаем массив объектов класса Spring, 10шт
+    private Sprite[] sprites = new Sprite[1000];//создаем массив объектов класса Spring, 10шт
+    private  Sprite spMouse = new Ball();
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -51,10 +52,12 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
 
 
 
-        for (int j = 0; j < sprites.length; j++) {
+        for (int j = 0; j <addRemove.auto_generated_balls; j++) {
           sprites[j] = new Ball();
             addRemove.priviousBall_id++;
        }
+
+
     }
 
     public void onCanvasRepainted(MainCanvas canvas, Graphics g, float deltaTime) {//Создаем метод onCanvasRepainted с
@@ -65,17 +68,18 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
     }
 
     private void update(MainCanvas canvas, float deltaTime) {//создание метода обновления
-        for (int i = 0; i < sprites.length; i++) {
-            sprites[i].update(canvas, deltaTime);
-        }
+
         bc.update(canvas, deltaTime);
+        for (int i = 0; i < sprites.length;  i++) {
+            if (sprites[i]!=null)sprites[i].update(canvas, deltaTime);
+        }
     }
 
     private void render(MainCanvas canvas, Graphics g) {//создаем метод отрисовки
         bc.render(canvas, g);
 
         for (int i = 0; i < sprites.length; i++) {
-            sprites[i].render(canvas, g);
+            if (sprites[i]!=null)sprites[i].render(canvas, g);
         }
 
     }
@@ -83,16 +87,19 @@ public class MainCircles extends JFrame {//создаем класс MainCircles
         return   new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton()==MouseEvent.BUTTON1){
-                   // sprites[addRemove.priviousBall_id++]=new Ball(e.getX(),e.getY());}
-                    System.out.println("Button1");}
+                if (e.getButton()==MouseEvent.BUTTON1) {
+                    sprites[addRemove.priviousBall_id++]=new Ball(e.getX(),e.getY());}
+                    //System.out.println("Button1");
+                    //spMouse = new Ball(e.getX(),e.getY());
+
+                //}
 
                 else if (e.getButton()==MouseEvent.BUTTON3){
-//                    System.out.println(e.getX()+" "+e.getY());
-//                    int idOfSprite=addRemove.findSpriteNumber(e.getX(),e.getY(),sprites);
-//                    if (idOfSprite>=0){
-//                        sprites[idOfSprite]=null;}
-                    System.out.println("Button2");
+                    System.out.println(e.getX()+" "+e.getY());
+                    int idOfSprite=addRemove.findSpriteNumber(e.getX(),e.getY(),sprites);
+                    if (idOfSprite>=0){
+                        sprites[idOfSprite]=null;}
+                    //System.out.println("Button2");
 
                 }
             }
