@@ -2,6 +2,7 @@ package ru.geekbrains.java.leve1.lesson2;
 
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
@@ -19,7 +20,7 @@ import java.util.InputMismatchException;
  5. * Написать собственные классы исключений для каждого из случаев*/
 
 public class DZ2 {
-    String str = "10 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
+    String str = "10 d 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
 
     public static void main(String[] args) {
         DZ2 dz2 = new DZ2();
@@ -44,6 +45,7 @@ public class DZ2 {
         str= str.replaceAll("\n"," ");// метод позволяет заменить слово в строке.
         String str2[] = str.split(  " ");//возвращает массив строк, вычисленных путем разделения данной строки вокруг данного регулярного выражения.
         String str3[][] = new String[str2.length/4][str2.length/4];
+        if(str3.length !=4) throw new ProcessingArrayEx("Массив не равен 4х4");
         for (int i = 0; i <str3.length ; i++) {
             for (int j = 0; j <str3[0].length ; j++) {
                     str3 [i][j] = str2[col++];
@@ -58,9 +60,12 @@ public class DZ2 {
 
     public void stringOfInt(String[][]str) throws NumberFormatException{
         int f=0;
+        int a[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         int [][] b=new int[str.length][str.length];
         for (int i = 0; i <str.length ; i++) {
             for (int j = 0; j <str.length ; j++) {
+                for (int ar:a){if(b[i][j]==ar) throw new ProcessingNFEx("В массиве символ");}
+
                     b[i][j] = Integer.parseInt(str[i][j]);
                     f=b[i][j]+f;
             }//end for j
@@ -70,15 +75,15 @@ public class DZ2 {
     }
     class  ProcessingNFEx extends NumberFormatException
     {
-        public ProcessingNFEx() {
-            super();
+        public ProcessingNFEx(String s) {
+            super(s);
         }
     }
     class  ProcessingArrayEx extends ArrayIndexOutOfBoundsException
     {
 
-        public ProcessingArrayEx() {
-          super();
+        public ProcessingArrayEx(String s) {
+          super(s);
 
         }
     }
