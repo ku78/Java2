@@ -5,8 +5,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler {
+public class ClientGUI extends JFrame implements ActionListener, Thread.UncaughtExceptionHandler , KeyListener {
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
@@ -19,7 +23,7 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
     private final JTextField tfLogin = new JTextField("ivan");
     private final JPasswordField tfPassword = new JPasswordField("123");
     private final JButton btnLogin = new JButton("Login");
-
+    private  FileWriter fw = new FileWriter( "log.txt",true );
     private final JPanel panelBottom = new JPanel(new BorderLayout());
     private final JButton btnDisconnect = new JButton("<html><b>Disconnect</b></html>");
     private final JTextField tfMessage = new JTextField();
@@ -27,16 +31,21 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
 
     private final JList<String> userList = new JList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ClientGUI();
+                try {
+                    new ClientGUI();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
     }
 
-    private ClientGUI() {
+    private ClientGUI() throws IOException {
         Thread.setDefaultUncaughtExceptionHandler(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -50,6 +59,8 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         JScrollPane scrollUsers = new JScrollPane(userList);
         scrollUsers.setPreferredSize(new Dimension(100, 0));
         cbAlwaysOnTop.addActionListener(this);
+        btnSend.addActionListener(this);
+        tfMessage.addKeyListener(this);
 
         panelTop.add(tfIPAddress);
         panelTop.add(tfPort);
@@ -67,17 +78,30 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
         add(panelBottom, BorderLayout.SOUTH);
 
         setVisible(true);
+
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)  {
         Object src = e.getSource();
         if (src == cbAlwaysOnTop) {
             setAlwaysOnTop(cbAlwaysOnTop.isSelected());
+        }else if(src == btnSend){
+            log.append(tfMessage.getText() + "\n");
+            try {
+                fw.append(tfMessage.getText() + "\n");
+                //fw.write(tfMessage.getText() + "\n");
+                fw.flush();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            //Тут запись в файл
         }
         else
             throw new RuntimeException("Unknown source: " + src);
+
     }
+
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
@@ -89,5 +113,29 @@ public class ClientGUI extends JFrame implements ActionListener, Thread.Uncaught
                 e.getMessage() + "\n\t" + ste[0];
         JOptionPane.showMessageDialog(null, msg, "Exception", JOptionPane.ERROR_MESSAGE);
         System.exit(1);
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            log.append(tfMessage.getText() + "\n");
+            try {
+                fw.write(tfMessage.getText() + "\n");
+                fw.flush();
+
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            //Тут запись в файл
+        }
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
